@@ -1,12 +1,8 @@
 # ide
-/.idea
-/venv
+.idea
+venv/
+venv2/
+venv3/
 
 # data
-data/
-datasets/
-examples/
-tests/
-
-# credentials
-Neo4j-c1b17777-Created-2024-11-08.txt
+playground/
