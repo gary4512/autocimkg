@@ -36,7 +36,7 @@ Y. Lairgi, L. Moncla, R. Cazabet, K. Benabdeslem, and P. Cléau, ‘iText2KG: In
 ## Installation
 The recommended way to use AutoCimKG is to download the library from GitHub and make it available in a desired Python project.
 This can take the form of a [PyCharm](https://www.jetbrains.com/pycharm/) Python project centered around a [Jupyter Notebook](https://jupyter.org/).
-The library needs an LLM API access to be ready and a token for a chat as well as embedding model set up (e.g. use [OpenAI's developer platform](https://platform.openai.com/)).
+The library needs an LLM API access to be ready and a token for a chat as well as embedding model set up (e.g. use OpenAI's [developer platform](https://platform.openai.com/)).
 Moreover, AutoCimKG connects to a [PostgreSQL/Apache AGE database](https://age.apache.org/age-manual/master/intro/setup.html), if desired. 
 Another recommendation is to set up the terminal-based [psql](https://www.postgresql.org/docs/current/app-psql.html) 
 and [pgAdmin](https://www.pgadmin.org/) to inspect assembled property graphs as well as associated metadata and to query the competency KG (using SQL and Cypher).
