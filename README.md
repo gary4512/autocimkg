@@ -2,7 +2,7 @@
 
 AutoCimKG is a reusable, prototypical Python module that automatically builds and incrementally updates knowledge graphs (KGs) about experts and competencies. 
 It applies unified, semantic text processing by prompting off-the-shelf large language models (LLMs), such as OpenAI's [GPT-4o](https://openai.com/de-DE/index/hello-gpt-4o/).
-For this purpose, the approach utilises the LLM abstraction framework LangChain.
+For this purpose, the approach utilises the LLM abstraction framework [LangChain](https://www.langchain.com/).
 The training-free AutoCimKG consumes unstructured texts and tries to elicit knowledge and skills (as well as their relations) applied in the processed documents and attributable to their authors.
 Additionally, it processes relational master data to resolve valid experts and determine associated facts like department affiliation or employment status. 
 Consequently, the extensible prototype yields an overall KG that encodes distinct experts, competencies, documents and organisational units across inputs.
@@ -18,7 +18,7 @@ Moreover, the ontology lets the user define a strictness level, which indicates 
 Contrarily, relationship types are used to filter and standardise extracted competency relationships.
 Last but not least, AutoCimKG manages comprehensive metadata and realises a relational metadata repository in the connected PostgreSQL/Apache AGE database. 
 Thus, it allows to store and retrieve data sources, KG version information, system logs, LLM as well as system configurations and applied ontologies. 
-In addition, the assembled KG encodes embedded (i.e. fact-level) provenance about editors, sources and generation as well as invalidation moments.
+In addition, the assembled property graph encodes embedded (i.e. fact-level) provenance about editors, sources and generation as well as invalidation moments.
 <br/>
 <br/>
 The artefact AutoCimKG was developed in the course of a master's thesis. Further information about the project is provided there.
