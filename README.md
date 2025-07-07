@@ -10,7 +10,7 @@ This is supported by ongoing entity and relationship resolution (building on tex
 Moreover, an existing KG can be extended incrementally with new documents, if available. No batch-like rebuild is needed for this purpose.
 <br/>
 <br/>
-The developed software system offers even more functionality. AutoCimKG also allows to store and retrieve snapshots of KGs to and from a connected PostgreSQL/Apache AGE database, which enables query-based utilisation and makes the KG available fo downstream tasks.
+The developed software system offers even more functionality. AutoCimKG also allows to store and retrieve snapshots of KGs to and from a connected PostgreSQL/Apache AGE database, which enables query-based utilisation and makes the KG available for downstream tasks.
 Moreover, the system also offers to process a user-defined lightweight ontology (respectively semantic schema). 
 Here, specialist subject areas and specific relationship types are definable that align the LLM-based extraction of competencies and their relations from text. 
 More specifically, subject areas are semantically linked to subordinate competencies and integrated into the KG (adding a more coarse-grained level for utilisation).
@@ -21,7 +21,7 @@ Thus, it allows to store and retrieve data sources, KG version information, syst
 In addition, the assembled KG encodes embedded (i.e. fact-level) provenance about editors, sources and generation as well as invalidation moments.
 <br/>
 <br/>
-The artefact AutoCimKG was developed in the course of a master's thesis. 
+The artefact AutoCimKG was developed in the course of a master's thesis. Further information about the project is provided there.
 - **Title**: 'Automatic Construction and Incremental Maintenance of Knowledge Graphs: Encoding Employee Competencies in the Case of the Austrian Financial Market Authority'
 - **Author:** Gerhard Lerch
 - **Year:** 2025
@@ -29,9 +29,8 @@ The artefact AutoCimKG was developed in the course of a master's thesis.
 ## License Notice
 This software is based on and includes modified components of the [iText2KG library (v0.0.7)](https://github.com/AuvaLab/itext2kg), which is licensed under the GNU Lesser General Public Library (v2.1).
 The extensive changes and enhancements made are reflected in all files of the reused codebase and correspond to the overview given above. 
-The software is therefore also licensed under LGPL-2.1 and a copy of the license is provided in the 'LICENSE.txt' file.
+This software is therefore also licensed under LGPL-2.1 and a copy of the license is provided in the 'LICENSE.txt' file.
 <br/>
 <br/>
 Y. Lairgi, L. Moncla, R. Cazabet, K. Benabdeslem, and P. Cléau, ‘iText2KG: Incremental Knowledge Graphs Construction Using Large Language Models’, in Web Information Systems Engineering – WISE 2024, vol. 15439, M. Barhamgi, H. Wang, and X. Wang, Eds., in Lecture Notes in Computer Science, vol. 15439. , Singapore: Springer, 2025, pp. 214–229. doi: 10.1007/978-981-96-0573-6_16.
-AutoCimKG
 ## Usage
