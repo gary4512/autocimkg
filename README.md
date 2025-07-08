@@ -1,6 +1,6 @@
 # AutoCimKG: Automatic Construction and Incremental Maintenance of Knowledge Graphs
 
-[![DOI](https://zenodo.org/badge/890855071.svg)](https://doi.org/10.5281/zenodo.15834991)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15834992.svg)](https://doi.org/10.5281/zenodo.15834992)
 
 AutoCimKG is a reusable, prototypical Python module that automatically builds and incrementally updates knowledge graphs (KGs) about experts and competencies. 
 It applies unified, semantic text processing by prompting off-the-shelf large language models (LLMs), such as OpenAI's [GPT-4o](https://openai.com/de-DE/index/hello-gpt-4o/).
