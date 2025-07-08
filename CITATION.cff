@@ -1,0 +1,10 @@
+cff-version: 1.1.0
+message: "if you use this software, please cite it as below."
+authors:
+- family-names: Lerch
+  given-names: Gerhard
+title: "AutoCimKG: Automatic Construction and Incremental Maintenance of Knowledge Graphs"
+version: v1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2025-07-08
+url: "https://github.com/gary4512/autocimkg"
