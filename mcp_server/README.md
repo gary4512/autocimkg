@@ -176,7 +176,11 @@ Entra ID doesn't support dynamic client registration, so the *dynamic registrati
   ```bash
   psql -U autocimkg -d autocimkg -v reader_password="'<password>'" -f create_readonly_role.sql
   ```
-- **Defence in depth:** the server doesn't rely on the role alone. It also
+- **Use Apache AGE 1.7.0 or later.** Older versions don't enforce PostgreSQL privileges or read-only transactions for
+  Cypher `SET` and `DELETE`, so even a read-only role can modify graphs there. This was fixed in
+  [apache/age#2309](https://github.com/apache/age/pull/2309); the Docker image `apache/age:release_PG18_1.8.0` works.
+  AutoCimKG itself runs unchanged on AGE 1.8.0 / PostgreSQL 18.
+- **Defence in depth:** the server doesn't rely on the database alone, which also protects installations on older AGE versions. It
   - rejects write clauses and schema-qualified function calls in `run_cypher_query`,
   - runs every query in a read-only transaction that is always rolled back.
 - Configure Entra ID and/or `AUTOCIMKG_MCP_API_KEY` whenever the server is reachable from outside the machine. Without
