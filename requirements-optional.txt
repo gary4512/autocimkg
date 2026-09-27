@@ -1,0 +1,17 @@
+# Optional LangChain integrations for LLM providers other than OpenAI (see create_chat_model / create_embeddings_model).
+# Install only the ones you need, e.g.: pip install -r requirements.txt langchain-ollama==0.2.0
+# Versions are compatible with langchain-core==0.3.19 from requirements.txt.
+
+# local models via Ollama (chat + embeddings)
+langchain-ollama==0.2.0
+# Anthropic Claude (chat)
+langchain-anthropic==0.3.0
+# Google Gemini (chat + embeddings)
+langchain-google-genai==2.0.7
+# Mistral AI (chat + embeddings)
+langchain-mistralai==0.2.2
+# local sentence-transformers embeddings, computed in-process (pulls in PyTorch, several GB)
+# langchain-huggingface==0.1.2
+
+# NOTE: Azure OpenAI and OpenAI-compatible local servers (LM Studio, vLLM, llama.cpp, LocalAI, ...) only need
+# langchain-openai, which is already part of requirements.txt.

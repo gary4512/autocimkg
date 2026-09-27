@@ -6,3 +6,6 @@ venv3/
 
 # data
 playground/
+
+# python
+__pycache__/

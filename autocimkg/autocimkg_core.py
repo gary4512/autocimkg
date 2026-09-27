@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import logging
 import io
@@ -9,7 +10,7 @@ from importlib import reload
 from sklearn.metrics.pairwise import cosine_similarity
 from .ientities_extraction import iEntitiesExtractor
 from .irelations_extraction import iRelationsExtractor
-from .utils import Matcher, LLMIntegrator
+from .utils import Matcher, LLMIntegrator, get_model_config
 from .models import KnowledgeGraph, Entity, EntityProperties, Relationship, RelationshipProperties, Document, Employee, Ontology, AlignedEntity, Log
 
 
@@ -178,8 +179,8 @@ class AutoCimKGCore:
 
         ##### RUN KGC
         self.logger.info("Performing KG construction!")
-        self.logger.info("LLM chat model = %s", self.llm_model.model_dump_json())
-        self.logger.info("LLM embedding model = %s", self.embeddings_model.model_dump_json())
+        self.logger.info("LLM chat model = %s", json.dumps(get_model_config(self.llm_model)))
+        self.logger.info("LLM embedding model = %s", json.dumps(get_model_config(self.embeddings_model)))
 
         configuration = {"agent": self.agent, "domain": domain, "max_entities_per_doc": max_entities_per_doc,
                          "expert_threshold": expert_threshold, "ent_threshold": ent_threshold,

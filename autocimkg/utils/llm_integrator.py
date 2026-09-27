@@ -2,16 +2,35 @@ from langchain_core.exceptions import OutputParserException
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 import time
-import openai
 from typing import Union
 import numpy as np
 import logging
 import sys
 from importlib import reload
 
+# provider-independent detection of errors worth retrying (rate limits, overload, timeouts, bad requests, ...)
+RETRYABLE_ERROR_NAMES = ("RateLimit", "BadRequest", "Timeout", "Connect", "ServiceUnavailable", "InternalServer",
+                         "Overloaded", "ResourceExhausted", "TooManyRequests")
+RETRYABLE_STATUS_CODES = (400, 408, 409, 429, 500, 502, 503, 504, 529)
+
+def is_retryable_error(error: Exception) -> bool:
+    """
+    Decides whether an error raised by any LLM provider's client is worth retrying.
+
+    :param error: Error raised when invoking the chat model
+    :returns: True, if the error indicates a rate limit or another transient issue
+    """
+
+    if isinstance(error, (ConnectionError, TimeoutError)):
+        return True
+    status_code = getattr(error, "status_code", None) or getattr(getattr(error, "response", None), "status_code", None)
+    if status_code in RETRYABLE_STATUS_CODES:
+        return True
+    return any(name in type(error).__name__ for name in RETRYABLE_ERROR_NAMES)
+
 class LLMIntegrator:
     """
-    A parser designed for extracting and embedding information using Langchain and OpenAI APIs.
+    A parser designed for extracting and embedding information using Langchain and any supported LLM provider.
     """
     
     def __init__(self, llm_model, embeddings_model, sleep_time: int = 5, logger = None):
@@ -93,14 +112,11 @@ class LLMIntegrator:
 
         try:
             return chain.invoke({"query": instructions})
-        except openai.BadRequestError:
-            self.logger.exception("Too much requests, we are sleeping!")
-            time.sleep(self.sleep_time)
-            return self.extract_information(output_data_structure, context, instructions, retry + 1)
-        except openai.RateLimitError:
-            self.logger.exception("Too much requests exceeding rate limit, we are sleeping!")
-            time.sleep(self.sleep_time)
-            return self.extract_information(output_data_structure, context, instructions, retry + 1)
         except OutputParserException as e:
             self.logger.warning("Error in parsing the instance: %s", context)
             raise e
+        except Exception as e:
+            if not is_retryable_error(e): raise e
+            self.logger.exception("LLM request failed (e.g. rate limit exceeded), we are sleeping!")
+            time.sleep(self.sleep_time)
+            return self.extract_information(output_data_structure, context, instructions, retry + 1)

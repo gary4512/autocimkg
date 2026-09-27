@@ -38,12 +38,44 @@ Y. Lairgi, L. Moncla, R. Cazabet, K. Benabdeslem, and P. Cléau, ‘iText2KG: In
 ## Installation
 The recommended way to use AutoCimKG is to download the library from GitHub and make it available in a desired Python project.
 This can take the form of a [PyCharm](https://www.jetbrains.com/pycharm/) Python project centered around a [Jupyter Notebook](https://jupyter.org/).
-The library needs an LLM API access to be ready and a token for a chat as well as embedding model set up (e.g. use OpenAI's [developer platform](https://platform.openai.com/)).
+The library needs a chat as well as an embedding model, either hosted (e.g. via OpenAI's [developer platform](https://platform.openai.com/)) or running locally (e.g. via [Ollama](https://ollama.com/)).
 Moreover, AutoCimKG connects to a [PostgreSQL/Apache AGE database](https://age.apache.org/age-manual/master/intro/setup.html), if desired. 
 Another recommendation is to set up the terminal-based [psql](https://www.postgresql.org/docs/current/app-psql.html) 
 and [pgAdmin](https://www.pgadmin.org/) to inspect assembled property graphs as well as associated metadata and to query the competency KG (using SQL and Cypher).
 <br/>
 <br/>
 In general, AutoCimKG was developed and is tested with Python v3.9 and lists all required packages in the 'requirements.txt' file.
+## LLM Providers
+AutoCimKG accepts any [LangChain](https://www.langchain.com/) chat and embeddings model. 
+For common providers, ```create_chat_model()``` and ```create_embeddings_model()``` construct suitable models (incl. JSON output mode where supported):
+```python
+from autocimkg import create_chat_model, create_embeddings_model
+
+# hosted
+llm_model = create_chat_model("openai", "gpt-4o")                       # OPENAI_API_KEY
+embeddings_model = create_embeddings_model("openai", "text-embedding-3-large")
+
+# local via Ollama
+llm_model = create_chat_model("ollama", "qwen3.5:9b", num_ctx=16384)
+embeddings_model = create_embeddings_model("ollama", "nomic-embed-text")
+
+# local via LM Studio, vLLM, llama.cpp, LocalAI, ... (OpenAI-compatible API)
+llm_model = create_chat_model("openai_compatible", "<model>", base_url="http://localhost:1234/v1")
+```
+| Provider            | Chat | Embeddings | Package                  |
+|---------------------|------|------------|--------------------------|
+| `openai`            | yes  | yes        | `langchain-openai`       |
+| `azure_openai`      | yes  | yes        | `langchain-openai`       |
+| `openai_compatible` | yes  | yes        | `langchain-openai`       |
+| `ollama`            | yes  | yes        | `langchain-ollama`       |
+| `anthropic`         | yes  | -          | `langchain-anthropic`    |
+| `google_genai`      | yes  | yes        | `langchain-google-genai` |
+| `mistralai`         | yes  | yes        | `langchain-mistralai`    |
+| `huggingface`       | -    | yes        | `langchain-huggingface`  |
+
+Packages beyond ```langchain-openai``` are listed in 'requirements-optional.txt'. Further arguments are handed to the respective LangChain class. 
+```get_model_config()``` describes a model without API keys, e.g. for storing it via ```MetadataIntegrator.create_llm_config()```.
+Note that an existing KG can only be maintained with the embeddings model it was built with, as entity and relationship resolution compares embeddings.
+Moreover, smaller local models tend to produce invalid JSON more often, which AutoCimKG answers with retries (see ```max_tries``` parameters).
 ## Usage
 An exemplary utilisation of AutoCimKG is provided in the ```tutorial```.
