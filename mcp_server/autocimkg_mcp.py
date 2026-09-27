@@ -65,9 +65,9 @@ def env(name: str, default: str = "") -> str:
     return os.environ.get(name, default)
 
 
-DB = dict(host=env("AUTOCIMKG_DB_HOST", "localhost"), port=int(env("AUTOCIMKG_DB_PORT", "5455")),
-          dbname=env("AUTOCIMKG_DB_NAME", "autocimkg"), user=env("AUTOCIMKG_DB_USER", "autocimkg"),
-          password=env("AUTOCIMKG_DB_PASSWORD", "autocimkg"))
+DB = dict(host=env("AUTOCIMKG_DB_HOST", "localhost"), port=int(env("AUTOCIMKG_DB_PORT", "5432")),
+          dbname=env("AUTOCIMKG_DB_NAME", "postgres"), user=env("AUTOCIMKG_DB_USER", "postgres"),
+          password=env("AUTOCIMKG_DB_PASSWORD"))
 
 
 # ---------------------------------------------------------------- database access

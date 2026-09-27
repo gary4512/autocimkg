@@ -3,10 +3,12 @@
 -- write clauses and rolls back every transaction (defence in depth).
 -- NOTE: Apache AGE enforces this role for Cypher SET and DELETE only from version 1.7.0 on (apache/age#2309).
 -- Run as the owner of the AutoCimKG database (the user AutoCimKG writes with):
---   psql -U autocimkg -d autocimkg -v reader_password="'<password>'" -f create_readonly_role.sql
+--   psql -U <owner> -d <database> -v reader_password="'<password>'" -f create_readonly_role.sql
 
 CREATE ROLE autocimkg_reader LOGIN PASSWORD :reader_password;
-GRANT CONNECT ON DATABASE autocimkg TO autocimkg_reader;
+DO $$ BEGIN
+    EXECUTE format('GRANT CONNECT ON DATABASE %I TO autocimkg_reader', current_database());
+END $$;
 
 -- AGE catalog and AutoCimKG metadata repository
 GRANT USAGE ON SCHEMA ag_catalog, public TO autocimkg_reader;

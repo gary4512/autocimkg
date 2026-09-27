@@ -28,8 +28,8 @@ Every tool accepts an optional `graph`. Without it, the server uses `AUTOCIMKG_G
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `AUTOCIMKG_DB_HOST` / `_PORT` / `_NAME` | `localhost` / `5455` / `autocimkg` | PostgreSQL/Apache AGE database |
-| `AUTOCIMKG_DB_USER` / `_PASSWORD` | `autocimkg` | Use the read-only role, see *Security* |
+| `AUTOCIMKG_DB_HOST` / `_PORT` / `_NAME` | `localhost` / `5432` / `postgres` | PostgreSQL/Apache AGE database AutoCimKG writes to |
+| `AUTOCIMKG_DB_USER` / `_PASSWORD` | `postgres` / – | Use the read-only role, see *Security* |
 | `AUTOCIMKG_GRAPH` | latest KG version | Default graph |
 | `AUTOCIMKG_EMBEDDINGS_BASE_URL` | – | OpenAI-compatible endpoint, e.g. `https://api.openai.com/v1`, `https://<resource>.openai.azure.com/openai/v1`, `http://localhost:11434/v1` (Ollama) |
 | `AUTOCIMKG_EMBEDDINGS_MODEL` | – | **Must be the model the graph was built with**, e.g. `text-embedding-3-large` |
@@ -53,8 +53,11 @@ Without an embeddings endpoint, search falls back to keyword matching.
 
 ```bash
 python -m venv .venv
-.venv/Scripts/pip install -r requirements.txt
-AUTOCIMKG_MCP_API_KEY=<secret> AUTOCIMKG_EMBEDDINGS_BASE_URL=http://localhost:11434/v1 AUTOCIMKG_EMBEDDINGS_MODEL=nomic-embed-text .venv/Scripts/python autocimkg_mcp.py
+.venv/bin/pip install -r requirements.txt          # Windows: .venv\Scripts\pip
+export AUTOCIMKG_DB_NAME=<database> AUTOCIMKG_DB_USER=autocimkg_reader AUTOCIMKG_DB_PASSWORD=<password>
+export AUTOCIMKG_MCP_API_KEY=<secret>
+export AUTOCIMKG_EMBEDDINGS_BASE_URL=https://api.openai.com/v1 AUTOCIMKG_EMBEDDINGS_MODEL=text-embedding-3-large AUTOCIMKG_EMBEDDINGS_API_KEY=<key>
+.venv/bin/python autocimkg_mcp.py
 ```
 
 The MCP endpoint is `http://127.0.0.1:8000/mcp` (Streamable HTTP, stateless, JSON responses), and `/health` answers without a key.
@@ -174,7 +177,7 @@ Entra ID doesn't support dynamic client registration, so the *dynamic registrati
 - **Use a read-only database role.** [`create_readonly_role.sql`](create_readonly_role.sql) creates `autocimkg_reader`, which
   can read all current and future graphs:
   ```bash
-  psql -U autocimkg -d autocimkg -v reader_password="'<password>'" -f create_readonly_role.sql
+  psql -U <owner> -d <database> -v reader_password="'<password>'" -f create_readonly_role.sql
   ```
 - **Use Apache AGE 1.7.0 or later.** Older versions don't enforce PostgreSQL privileges or read-only transactions for
   Cypher `SET` and `DELETE`, so even a read-only role can modify graphs there. This was fixed in
