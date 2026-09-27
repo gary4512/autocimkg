@@ -47,3 +47,5 @@ and [pgAdmin](https://www.pgadmin.org/) to inspect assembled property graphs as 
 In general, AutoCimKG was developed and is tested with Python v3.9 and lists all required packages in the 'requirements.txt' file.
 ## Usage
 An exemplary utilisation of AutoCimKG is provided in the ```tutorial```.
+## Use in AI Agents (e.g. Microsoft Copilot Studio)
+The folder ```mcp_server``` contains a standalone MCP server that exposes stored competency KGs as read-only tools (e.g. finding experts for a topic), which agents in Microsoft Copilot Studio and Microsoft 365 Copilot can call (authenticated via Entra ID or an API key). See its README for setup.
