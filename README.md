@@ -28,6 +28,10 @@ The artefact AutoCimKG was developed in the course of a master's thesis. Further
 - **Author:** Gerhard Lerch
 - **Year:** 2025
 - **University:** Johannes Kepler Universit&auml;t Linz
+## Maintenance Status
+This repository is no longer actively maintained and is preserved in its current state.
+<br/>
+For newer versions see [@franzmohr's fork](https://github.com/franzmohr/autocimkg). Thanks to @franzmohr for the great additions to the project!
 ## License Notice
 This software is based on and includes modified components of the [iText2KG library (v0.0.7)](https://github.com/AuvaLab/itext2kg), which is licensed under the GNU Lesser General Public Library (v2.1).
 The extensive changes and enhancements made are reflected in all files of the reused codebase and correspond to the overview given above. 
